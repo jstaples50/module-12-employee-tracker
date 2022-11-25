@@ -48,15 +48,24 @@ const sendRoleId = (roleTitle) => {
     return db.promise().query(`SELECT * FROM role WHERE role.title = '${roleTitle}'`);
 }
 
+// getAllEmployees as a callback function
+
+// const getAllEmployees = () => {
+//     db.query('SELECT * FROM employee', (err, results) => {
+//         if (err) {
+//             console.error(err);
+//             return;
+//         }
+//         console.table('\nEmployees', results);
+//     })
+// }
+
+// getAllEmployees as a promise
+
 const getAllEmployees = () => {
-    db.query('SELECT * FROM employee', (err, results) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.table('\nEmployees', results);
-    })
+    return db.promise().query('SELECT * FROM employee');
 }
+
 
 const addDepartment = (departmentName) => {
     db.query(`INSERT INTO department (name) VALUES ('${departmentName}');`, (err, results) => {
@@ -86,7 +95,6 @@ const addEmployee = (firstName, lastName, roleId, managerId=null) => {
             console.error(err);
             return;
         }
-        console.log(results);
     })
 } 
 
