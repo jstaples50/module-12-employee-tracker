@@ -10,16 +10,19 @@ const db = mysql.createConnection(
     console.log(`Connected to the courses_db database.`)
   );
 
-const getAllDepartments = () => {
-    db.query('SELECT * FROM department', (err, results) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.table('\nDepartments', results);
-    })
-}
+// const getAllDepartments = () => {
+//     db.query('SELECT * FROM department', (err, results) => {
+//         if (err) {
+//             console.error(err);
+//             return;
+//         }
+//         console.table('\nDepartments', results);
+//     })
+// }
 
+const getAllDepartments = () => {
+    return db.promise().query('SELECT * FROM department')
+}
 
 const getAllRoles = () => {
     return db.promise().query('SELECT * FROM role')
@@ -50,7 +53,7 @@ const addDepartment = (departmentName) => {
             console.error(err);
             return;
         }
-        console.log(results);
+        console.log(`\n\n${departmentName} added to Departments!`);
     })
 }
 
@@ -82,7 +85,7 @@ const updateEmployeeRole = (employeeName, employeeID, newRoleId) => {
             console.error(err);
             return;
         } else {
-            console.log(`Employee ${employeeName} updated!`);
+            console.log(`\n\nEmployee ${employeeName} updated!`);
         }
 
     });

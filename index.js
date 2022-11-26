@@ -38,6 +38,7 @@ const getRoleID = async (roleTitle) => {
 
 
 // FUNCTION TO PRINT ALL EMPLOYEES
+// TODO: Join tables so role title is shown instead of role Id
 
 const printAllEmployees = async () => {
   results = await getAllEmployees();
@@ -71,9 +72,9 @@ const addEmployeePrompt = async () => {
     }
   ])
   .then(async (data) => {
-    console.log(data);
     const newEmployeeRoleId = await getRoleID(data.assignRole);
     addEmployee(data.employeeFirstName, data.employeeLastName, newEmployeeRoleId, 1);
+    console.log(`\n\nNew employee ${data.employeeFirstName} ${data.employeeLastName} added!`);
     await main();
   })
 };
@@ -122,12 +123,38 @@ const updateEmployeeRolePrompt = async () => {
   })
 }
 
+// FUNCTION TO ADD ROLE
 
+const addRolePrompt = async () => {
+  
+}
+
+// FUNCTION TO PRINT ALL DEPARTMENTS
+
+const printAllDepartments = async () => {
+  results = await getAllDepartments();
+  console.table('\nDepartments', results[0]);
+}
+
+// FUNCTION TO ADD DEPARTMENT
+
+const addDepartmentPrompt = async () => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'newDepartment',
+      message: 'Enter new department name'
+    }
+  ]).then(async (data) => {
+    addDepartment(data.newDepartment);
+    await main();
+  })
+}
 
 // Calling main
 
-
 const callMainMenuPrompt = () => {
+  console.log('\n');
   const mainMenu = {
     type: 'list',
     name: 'mainMenu',
@@ -163,9 +190,10 @@ const main = async () => {
   } else if (choice === 'Add Role') {
     main();
   } else if (choice === 'View All Departments') {
+    await printAllDepartments();
     main();
   } else if (choice === 'Add Department') {
-    main();
+    addDepartmentPrompt();
   } else {
     console.log('\nThank You For Using The Employee Tracker!\nSee You Next Time!');
     return;
