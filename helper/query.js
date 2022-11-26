@@ -10,15 +10,7 @@ const db = mysql.createConnection(
     console.log(`Connected to the courses_db database.`)
   );
 
-// const getAllDepartments = () => {
-//     db.query('SELECT * FROM department', (err, results) => {
-//         if (err) {
-//             console.error(err);
-//             return;
-//         }
-//         console.table('\nDepartments', results);
-//     })
-// }
+// FUNCTION TO GET ALL DEPARTMENTS
 
 const getAllDepartments = () => {
     return db.promise().query('SELECT * FROM department')
@@ -57,13 +49,17 @@ const addDepartment = (departmentName) => {
     })
 }
 
+
+const sendDepartmentId = (departmentTitle) => {
+    return db.promise().query(`SELECT id FROM department WHERE department.name = '${departmentTitle}'`);
+}
+
 const addRole = (title, salary, departmentId) => {
     db.query(`INSERT INTO role (title, salary, department_id) VALUES ('${title}', '${salary}', '${departmentId}');`, (err, results) => {
         if (err) {
             console.error(err);
             return;
         }
-        console.log(results);
     })
 }
 
@@ -91,4 +87,4 @@ const updateEmployeeRole = (employeeName, employeeID, newRoleId) => {
     });
 }
 
-module.exports = { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, getRoleTitles, sendRoleId };
+module.exports = { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, getRoleTitles, sendRoleId, sendDepartmentId };

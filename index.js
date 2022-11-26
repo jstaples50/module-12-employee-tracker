@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, getRoleTitles, sendRoleId } = require('./helper/query');
+const { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, getRoleTitles, sendRoleId, sendDepartmentId } = require('./helper/query');
 
 
 // HELPER FUNCTIONS
@@ -28,6 +28,7 @@ const getValues = (body, array) => {
 
 const getRoleID = async (roleTitle) => {
   const results = await sendRoleId(roleTitle);
+
   
   // Isolates the id from the body of the results object;
   
@@ -35,6 +36,14 @@ const getRoleID = async (roleTitle) => {
   return id;
 }
 
+// FUNCTION TO GET DEPARTMENT ID
+
+const getDepartmentId = async (departmentName) => {
+  const results = await sendDepartmentId(departmentName);
+
+  const { id } = results[0][0];
+  return id;
+}
 
 
 // FUNCTION TO PRINT ALL EMPLOYEES
@@ -80,6 +89,7 @@ const addEmployeePrompt = async () => {
 };
       
 // FUNCTION TO PRINT ALL ROLES
+// TODO: Join tables so department name is shown instead of department Id
 
 const printAllRoles = async () => {
   results = await getAllRoles();
@@ -126,7 +136,36 @@ const updateEmployeeRolePrompt = async () => {
 // FUNCTION TO ADD ROLE
 
 const addRolePrompt = async () => {
-  
+  const departments = [];
+
+  const departmentResults = await getAllDepartments();
+  for (const department of departmentResults[0]) {
+    departments.push(department.name);
+  }
+
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'title',
+      message: 'Enter the title of the new role'
+    },
+    {
+      type: 'input',
+      name: 'salary',
+      message: 'Enter the salary of the new role'
+    },
+    {
+      type: 'list',
+      name: 'department',
+      message: 'Pick the department for the new role',
+      choices: departments
+    }
+  ]).then(async (data) => {
+    const newDepartmentId = await getDepartmentId(data.department);
+    addRole(data.title, data.salary, newDepartmentId);
+    console.log(`\n\nNew Role: ${data.title} added!`);
+    await main();
+  })
 }
 
 // FUNCTION TO PRINT ALL DEPARTMENTS
@@ -188,7 +227,7 @@ const main = async () => {
     await printAllRoles();
     main();
   } else if (choice === 'Add Role') {
-    main();
+    addRolePrompt();
   } else if (choice === 'View All Departments') {
     await printAllDepartments();
     main();
@@ -201,3 +240,5 @@ const main = async () => {
 }
 
 main();
+
+
