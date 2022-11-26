@@ -20,17 +20,6 @@ const getAllDepartments = () => {
     })
 }
 
-// getAllRoles as a callback function
-
-// const getAllRoles = () => {
-//     db.query('SELECT * FROM role', (err, results) => {
-//         if (err) {
-//             console.error(err);
-//             return;
-//         }
-//         console.table('\nRoles', results);
-//     })
-// }
 
 const getAllRoles = () => {
     return db.promise().query('SELECT * FROM role')
@@ -47,18 +36,6 @@ const getRoleTitles = () => {
 const sendRoleId = (roleTitle) => {
     return db.promise().query(`SELECT * FROM role WHERE role.title = '${roleTitle}'`);
 }
-
-// getAllEmployees as a callback function
-
-// const getAllEmployees = () => {
-//     db.query('SELECT * FROM employee', (err, results) => {
-//         if (err) {
-//             console.error(err);
-//             return;
-//         }
-//         console.table('\nEmployees', results);
-//     })
-// }
 
 // getAllEmployees as a promise
 
@@ -98,19 +75,14 @@ const addEmployee = (firstName, lastName, roleId, managerId=null) => {
     })
 } 
 
-// addEmployee to return a promise
 
-// const addEmployee = (firstName, lastName, roleId, managerId='NULL') => {
-//     return db.promise().query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${firstName}', '${lastName}', '${roleId}', '${managerId}');`);
-// }
-
-const updateEmployeeRole = (employeeID, newRoleId) => {
+const updateEmployeeRole = (employeeName, employeeID, newRoleId) => {
     db.query(`UPDATE employee SET role_id = ${newRoleId} WHERE id= ${employeeID}`, (err, result) => {
         if (err) {
             console.error(err);
             return;
         } else {
-            console.log(`Employee ${employeeID} updated!`);
+            console.log(`Employee ${employeeName} updated!`);
         }
 
     });

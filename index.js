@@ -3,6 +3,40 @@ const cTable = require('console.table');
 const { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, getRoleTitles, sendRoleId } = require('./helper/query');
 
 
+// HELPER FUNCTIONS
+
+// Experiments to get data from sql database and parse it into array
+
+const getRoleTitlesForInquirer = (array) => {
+  rolesArray().then((data) => {
+    data[0].forEach(title => getValues(title, array));
+  });
+}
+
+const rolesArray = async () => {
+  const results = await getRoleTitles();
+  return results;
+}
+
+const getValues = (body, array) => {
+  for (let value of Object.values(body)) {
+    array.push(value);
+  }
+}
+
+// FUNCTION TO GET ROLE ID
+
+const getRoleID = async (roleTitle) => {
+  const results = await sendRoleId(roleTitle);
+  
+  // Isolates the id from the body of the results object;
+  
+  const { id } = results[0][0];
+  return id;
+}
+
+
+
 // FUNCTION TO PRINT ALL EMPLOYEES
 
 const printAllEmployees = async () => {
@@ -10,43 +44,10 @@ const printAllEmployees = async () => {
   console.table('\nEmployees', results[0]);
 }
 
+// FUNCTION TO ADD EMPLOYEE
 // TODO: Create way to add default of NULL to managerID field
-      
+    
 const addEmployeePrompt = async () => {
-  // FUNCTIONS
-  
-  // Experiments to get data from sql database and parse it into array
-  
-  const getRoleTitlesForInquirer = (array) => {
-    rolesArray().then((data) => {
-      data[0].forEach(title => getValues(title, array));
-    });
-  }
-  
-  const rolesArray = async () => {
-    const results = await getRoleTitles();
-    return results;
-  }
-  
-  const getValues = (body, array) => {
-    for (let value of Object.values(body)) {
-      array.push(value);
-    }
-  }
-  
-  // FUNCTION TO GET ROLE ID
-  
-  const getRoleID = async (roleTitle) => {
-    const results = await sendRoleId(roleTitle);
-    
-    // Isolates the id from the body of the results object;
-    
-    const { id } = results[0][0];
-    return id;
-  }
-  
-  // EXECUTION
-  
   const choices = [];
   
   getRoleTitlesForInquirer(choices);
@@ -84,6 +85,44 @@ const printAllRoles = async () => {
   console.table('\nRoles', results[0]);
 }
 
+// FUNCTION TO UPDATE EMPLOYEE ROLE
+
+const updateEmployeeRolePrompt = async () => {
+  const roleChoices = [];
+  getRoleTitlesForInquirer(roleChoices);
+
+  const employeeChoices = [];
+  const employeeIds = [];
+  const allEmployeesMeta = await getAllEmployees();
+  const allEmployees = allEmployeesMeta[0]
+  for (const employee of allEmployees) {
+    employeeChoices.push(`${employee.first_name} ${employee.last_name}`);
+    employeeIds.push(employee.id);
+  }
+
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'employee_list',
+      message: "Which employee's role do you want to update?",
+      choices: employeeChoices
+    },
+    {
+      type: 'list',
+      name: 'assignRole',
+      message: "Pick employee's new role",
+      choices: roleChoices
+    }
+  ]).then(async (data) => {
+    const employeeIndex = employeeChoices.indexOf(`${data.employee_list}`);
+    const employeeId = employeeIds[employeeIndex];
+    const roleId = await getRoleID(data.assignRole);
+    updateEmployeeRole(data.employee_list, employeeId, roleId);
+    await main();
+  })
+}
+
+
 
 // Calling main
 
@@ -117,7 +156,7 @@ const main = async () => {
   } else if (choice === 'Add Employee') {
     addEmployeePrompt();
   } else if (choice === 'Update Employee Role') {
-    main();
+    updateEmployeeRolePrompt();
   } else if (choice === 'View All Roles') {
     await printAllRoles();
     main();
