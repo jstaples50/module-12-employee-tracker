@@ -129,6 +129,7 @@ const updateEmployeeRolePrompt = async () => {
     const employeeId = employeeIds[employeeIndex];
     const roleId = await getRoleID(data.assignRole);
     updateEmployeeRole(data.employee_list, employeeId, roleId);
+    console.log(`\n\n${data.employee_list} role updated!`)
     await main();
   })
 }
@@ -186,6 +187,7 @@ const addDepartmentPrompt = async () => {
     }
   ]).then(async (data) => {
     addDepartment(data.newDepartment);
+    console.log(`\n\nNew Department: ${data.newDepartment} was added!`)
     await main();
   })
 }

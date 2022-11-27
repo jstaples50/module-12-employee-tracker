@@ -45,7 +45,6 @@ const addDepartment = (departmentName) => {
             console.error(err);
             return;
         }
-        console.log(`\n\n${departmentName} added to Departments!`);
     })
 }
 
