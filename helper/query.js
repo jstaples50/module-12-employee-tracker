@@ -79,10 +79,7 @@ const updateEmployeeRole = (employeeName, employeeID, newRoleId) => {
         if (err) {
             console.error(err);
             return;
-        } else {
-            console.log(`\n\nEmployee ${employeeName} updated!`);
-        }
-
+        } 
     });
 }
 
