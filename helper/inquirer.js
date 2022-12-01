@@ -5,8 +5,6 @@ const { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole,
 
 // HELPER FUNCTIONS
 
-// Experiments to get data from sql database and parse it into array
-
 const getRoleTitlesForInquirer = (array) => {
     rolesArray()
     .then((data) => {
@@ -25,7 +23,7 @@ const getValues = (body, array) => {
     }
   }
   
-  // FUNCTION TO GET ROLE ID
+// FUNCTION TO GET ROLE ID
   
 const getRoleID = async (roleTitle) => {
     const results = await sendRoleId(roleTitle);
@@ -37,7 +35,7 @@ const getRoleID = async (roleTitle) => {
     return id;
   }
   
-  // FUNCTION TO GET DEPARTMENT ID
+// FUNCTION TO GET DEPARTMENT ID
   
 const getDepartmentId = async (departmentName) => {
     const results = await sendDepartmentId(departmentName);
@@ -47,16 +45,15 @@ const getDepartmentId = async (departmentName) => {
   }
   
   
-  // FUNCTION TO PRINT ALL EMPLOYEES
-  // TODO: Join tables so role title is shown instead of role Id
+// FUNCTION TO PRINT ALL EMPLOYEES
   
 const printAllEmployees = async () => {
     results = await getAllEmployees();
     console.table('\nEmployees', results[0]);
   }
   
-  // FUNCTION TO ADD EMPLOYEE
-  // TODO: Create way to add default of NULL to managerID field
+// FUNCTION TO ADD EMPLOYEE
+// TODO: Create way to add default of NULL to managerID field
       
 const addEmployeePrompt = async () => {
     const choices = [];
@@ -88,15 +85,15 @@ const addEmployeePrompt = async () => {
     })
   };
         
-  // FUNCTION TO PRINT ALL ROLES
-  // TODO: Join tables so department name is shown instead of department Id
+// FUNCTION TO PRINT ALL ROLES
+// TODO: Join tables so department name is shown instead of department Id
   
 const printAllRoles = async () => {
     results = await getAllRoles();
     console.table('\nRoles', results[0]);
   }
   
-  // FUNCTION TO UPDATE EMPLOYEE ROLE
+// FUNCTION TO UPDATE EMPLOYEE ROLE
   
 const updateEmployeeRolePrompt = async () => {
     const roleChoices = [];
@@ -133,7 +130,7 @@ const updateEmployeeRolePrompt = async () => {
     });
   }
   
-  // FUNCTION TO ADD ROLE
+// FUNCTION TO ADD ROLE
   
 const addRolePrompt = async () => {
     const departments = [];
@@ -167,14 +164,14 @@ const addRolePrompt = async () => {
     });
   }
   
-  // FUNCTION TO PRINT ALL DEPARTMENTS
+// FUNCTION TO PRINT ALL DEPARTMENTS
   
 const printAllDepartments = async () => {
     results = await getAllDepartments();
     console.table('\nDepartments', results[0]);
   }
   
-  // FUNCTION TO ADD DEPARTMENT
+// FUNCTION TO ADD DEPARTMENT
   
 const addDepartmentPrompt = async () => {
     await inquirer.prompt([

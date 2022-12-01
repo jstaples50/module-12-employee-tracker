@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
 const { printAllEmployees, addEmployeePrompt, printAllRoles, updateEmployeeRolePrompt, addRolePrompt, printAllDepartments, addDepartmentPrompt } = require('./helper/inquirer');
 
-// Calling main
 
 const callMainMenuPrompt = () => {
   console.log('\n');

@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const cTable = require('console.table');
+
 const db = mysql.createConnection(
     {
       host: 'localhost',
@@ -32,10 +32,8 @@ const sendRoleId = (roleTitle) => {
     return db.promise().query(`SELECT * FROM role WHERE role.title = '${roleTitle}'`);
 }
 
-// getAllEmployees as a promise
-
 const getAllEmployees = () => {
-    return db.promise().query('SELECT * FROM employee');
+    return db.promise().query('select emp.id, emp.first_name, emp.last_name, r1.title, d.name as department, r2.salary, m.first_name as manager from employee emp left join employee m on m.id=emp.manager_id left join role r1 on r1.id=emp.role_id left join role r2 on r2.id=r1.id left join department d on d.id=r1.department_id;');
 }
 
 
@@ -83,4 +81,4 @@ const updateEmployeeRole = (employeeName, employeeID, newRoleId) => {
     });
 }
 
-module.exports = { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, getRoleTitles, sendRoleId, sendDepartmentId };
+module.exports = { getAllDepartments, getAllRoles, getAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, getRoleTitles, sendRoleId, sendDepartmentId }; 

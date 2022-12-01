@@ -1,0 +1,56 @@
+// QUERIES 
+
+// SELECT employee.first_name, employee.last_name, role.title, employee.manager_id 
+// FROM employee
+// INNER JOIN role
+// ON employee.role_id = role.id;
+
+
+// Get the manager id set as employee name
+
+// SELECT a.first_name, a.last_name, b.first_name AS manager
+// FROM employee a, employee b
+// WHERE a.manager_id = b.id;
+
+
+// Next iteration, has null values now
+
+// select emp.first_name, emp.last_name, m.first_name as manager
+// from employee emp
+// left join employee m on m.id=emp.manager_id;
+
+
+// Next iteration, has role titles replacing role ids
+
+// select emp.first_name, emp.last_name, m.first_name as manager, role.title
+// from employee emp
+// left join employee m on m.id=emp.manager_id
+// left join role on role.id=emp.role_id;
+
+
+// Next iteration, has role title, salary, and department_id
+
+// select emp.id, emp.first_name, emp.last_name, m.first_name as manager, r1.title, r2.salary, r2.department_id
+// from employee emp
+// left join employee m on m.id=emp.manager_id
+// left join role r1 on r1.id=emp.role_id
+// left join role r2 on r2.id=r1.id;
+
+// Next iteration, has department names replacing the ids'
+
+// select emp.id, emp.first_name, emp.last_name, m.first_name as manager, r1.title, r2.salary, d.name as department
+// from employee emp
+// left join employee m on m.id=emp.manager_id
+// left join role r1 on r1.id=emp.role_id
+// left join role r2 on r2.id=r1.id
+// left join department d on d.id=r1.department_id; 
+
+
+// Next iteration, everything in acceptance criteria order
+
+// select emp.id, emp.first_name, emp.last_name, r1.title, d.name as department, r2.salary, m.first_name as manager  
+// from employee emp
+// left join employee m on m.id=emp.manager_id
+// left join role r1 on r1.id=emp.role_id
+// left join role r2 on r2.id=r1.id
+// left join department d on d.id=r1.department_id;
