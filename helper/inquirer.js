@@ -43,6 +43,10 @@ const getDepartmentId = async (departmentName) => {
     const { id } = results[0][0];
     return id;
   }
+
+// FUNCTION TO GET EMPLOYEE ID
+
+// const getEmployeeId = async (employee)
   
   
 // FUNCTION TO PRINT ALL EMPLOYEES
@@ -56,9 +60,8 @@ const printAllEmployees = async () => {
 // TODO: Create way to add default of NULL to managerID field
       
 const addEmployeePrompt = async () => {
-    const choices = [];
-    
-    getRoleTitlesForInquirer(choices);
+    const roleChoicesEmployeePrompt = [];
+    getRoleTitlesForInquirer(roleChoicesEmployeePrompt);
     
     await inquirer.prompt([
       {
@@ -75,7 +78,7 @@ const addEmployeePrompt = async () => {
         type: 'list',
         name: 'assignRole',
         message: "Pick new employee's role",
-        choices: choices,
+        choices: roleChoicesEmployeePrompt,
       }
     ])
     .then(async (data) => {
