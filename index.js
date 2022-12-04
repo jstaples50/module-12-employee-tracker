@@ -1,56 +1,64 @@
-const inquirer = require('inquirer');
-const { printAllEmployees, addEmployeePrompt, printAllRoles, updateEmployeeRolePrompt, addRolePrompt, printAllDepartments, addDepartmentPrompt } = require('./helper/inquirer');
-
+const inquirer = require("inquirer");
+const {
+  printAllEmployees,
+  addEmployeePrompt,
+  printAllRoles,
+  updateEmployeeRolePrompt,
+  addRolePrompt,
+  printAllDepartments,
+  addDepartmentPrompt,
+} = require("./helper/inquirer");
 
 const callMainMenuPrompt = () => {
-  console.log('\n');
+  console.log("\n");
   const mainMenu = {
-    type: 'list',
-    name: 'mainMenu',
-    message: 'What would you like to do?',
+    type: "list",
+    name: "mainMenu",
+    message: "What would you like to do?",
     choices: [
-      'View All Employees',
-      'Add Employee',
-      'Update Employee Role',
-      'View All Roles',
-      'Add Role',
-      'View All Departments',
-      'Add Department',
-      'Quit'
-    ]
+      "View All Employees",
+      "Add Employee",
+      "Update Employee Role",
+      "View All Roles",
+      "Add Role",
+      "View All Departments",
+      "Add Department",
+      "Quit",
+    ],
   };
-  return inquirer.prompt([mainMenu])
-  }
-
+  return inquirer.prompt([mainMenu]);
+};
 
 const main = async () => {
   const menuChoice = await callMainMenuPrompt();
   const choice = menuChoice.mainMenu;
-  if (choice === 'View All Employees') {
-    await printAllEmployees()
+  if (choice === "View All Employees") {
+    await printAllEmployees();
     main();
-  } else if (choice === 'Add Employee') {
+  } else if (choice === "Add Employee") {
     await addEmployeePrompt();
     main();
-  } else if (choice === 'Update Employee Role') {
+  } else if (choice === "Update Employee Role") {
     await updateEmployeeRolePrompt();
     main();
-  } else if (choice === 'View All Roles') {
+  } else if (choice === "View All Roles") {
     await printAllRoles();
     main();
-  } else if (choice === 'Add Role') {
+  } else if (choice === "Add Role") {
     await addRolePrompt();
     main();
-  } else if (choice === 'View All Departments') {
+  } else if (choice === "View All Departments") {
     await printAllDepartments();
     main();
-  } else if (choice === 'Add Department') {
+  } else if (choice === "Add Department") {
     await addDepartmentPrompt();
     main();
   } else {
-    console.log('\nThank You For Using The Employee Tracker!\nSee You Next Time!');
+    console.log(
+      "\nThank You For Using The Employee Tracker!\nSee You Next Time!"
+    );
     return;
   }
-}
+};
 
 main();
