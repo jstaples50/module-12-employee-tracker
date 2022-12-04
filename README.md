@@ -1,4 +1,8 @@
-# module-12-employee-tracker
+# Module-12-Employee-Tracker
+
+![employee-tracker-1](./assets/module-12-employee-tracker-1.png)
+
+![employee-tracker-2](./assets/module-12-employee-tracker-2.png)
 
 ## Description
 
