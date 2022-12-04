@@ -266,21 +266,3 @@ module.exports = {
   printAllDepartments,
   addDepartmentPrompt,
 };
-
-// TESTS
-
-const testManagers = async () => {
-  results = await managerNamesArray();
-  console.log(results);
-};
-
-// const masterTestArray = [];
-// getManagerNamesForInquirer(masterTestArray);
-// console.log(masterTestArray);
-
-// const employeeData = async () => {
-//   results = await getAllEmployees();
-//   console.log(results[0]);
-// };
-
-// employeeData();

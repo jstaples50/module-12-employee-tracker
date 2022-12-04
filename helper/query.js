@@ -16,6 +16,8 @@ const getAllDepartments = () => {
   return db.promise().query("SELECT * FROM department");
 };
 
+// FUNCTION TO GET ALL ROLES
+
 const getAllRoles = () => {
   return db
     .promise()
@@ -24,7 +26,7 @@ const getAllRoles = () => {
     );
 };
 
-// Use this query to get both title and id...still need to relate them for the addEmployee 'SELECT title, id FROM role'
+// FUNCTION TO GET ALL ROLE TITLES
 
 const getRoleTitles = () => {
   return db.promise().query("SELECT title FROM role");
@@ -38,6 +40,8 @@ const sendRoleId = (roleTitle) => {
     .query(`SELECT * FROM role WHERE role.title = '${roleTitle}'`);
 };
 
+// FUNCTION TO GET ALL EMPLOYEES
+
 const getAllEmployees = () => {
   return db
     .promise()
@@ -45,6 +49,8 @@ const getAllEmployees = () => {
       "select emp.id, emp.first_name, emp.last_name, r1.title, d.name as department, r2.salary, m.first_name as manager from employee emp left join employee m on m.id=emp.manager_id left join role r1 on r1.id=emp.role_id left join role r2 on r2.id=r1.id left join department d on d.id=r1.department_id;"
     );
 };
+
+// FUNCTION TO ADD DEPARTMENT
 
 const addDepartment = (departmentName) => {
   db.query(
@@ -58,6 +64,8 @@ const addDepartment = (departmentName) => {
   );
 };
 
+// FUNCTION TO SEND DEPARTMENT ID
+
 const sendDepartmentId = (departmentTitle) => {
   return db
     .promise()
@@ -65,6 +73,8 @@ const sendDepartmentId = (departmentTitle) => {
       `SELECT id FROM department WHERE department.name = '${departmentTitle}'`
     );
 };
+
+// FUNCTION TO ADD ROLE
 
 const addRole = (title, salary, departmentId) => {
   db.query(
@@ -105,6 +115,8 @@ const addEmployeeWithManager = (firstName, lastName, roleId, managerId) => {
     }
   );
 };
+
+// FUNCTION TO UPDATE EMPLOYEE ROLE
 
 const updateEmployeeRole = (employeeName, employeeID, newRoleId) => {
   db.query(
