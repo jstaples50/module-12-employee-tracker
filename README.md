@@ -23,6 +23,8 @@ Concepts applied to this project include:
   - Creating prepared statements for SQL queries
 - Using Inquirer to take in user input
 
+_Link to Walkthrough video:_ [Walkthrough Video](https://drive.google.com/file/d/1SkrArv157E6mUKpqHvJ2gTzePAW-TAH2/view)
+
 ## Table of Contents
 
 - [Installation](#installation)
