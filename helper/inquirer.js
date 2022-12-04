@@ -12,9 +12,9 @@ const {
   getRoleTitles,
   sendRoleId,
   sendDepartmentId,
-  getManagerNames,
 } = require("./query");
 
+// ****************
 // HELPER FUNCTIONS
 
 const getRoleTitlesForInquirer = (array) => {
@@ -34,15 +34,7 @@ const getValues = (body, array) => {
   }
 };
 
-// Function to get manager names in an array
-
-// const getManagerNamesForInquirer = (array) => {
-//   managerNamesArray().then((data) => {
-//     data[0].forEach((name) => getValues(name, array));
-//   });
-// };
-
-// FUNCTION TO GET EMPLOYEE NAMES
+// FUNCTION TO ISOLATE EMPLOYEE NAMES AND IDS
 
 const getEmployeeNamesandIds = async (
   employeeChoicesArray,
@@ -68,23 +60,6 @@ const getEmployeeNamesandIds = async (
   }
 };
 
-// Manager names array experiment
-
-const getManagerNamesForInquirer = (array) => {
-  managerNamesArray().then((data) => {
-    data.forEach((nameSet) => {
-      const firstLastNameArray = [];
-      getValues(nameSet, firstLastNameArray);
-      array.push(firstLastNameArray);
-    });
-  });
-};
-
-const managerNamesArray = async () => {
-  const results = await getManagerNames();
-  return results[0];
-};
-
 // FUNCTION TO GET ROLE ID
 
 const getRoleID = async (roleTitle) => {
@@ -105,9 +80,7 @@ const getDepartmentId = async (departmentName) => {
   return id;
 };
 
-// FUNCTION TO GET EMPLOYEE ID
-
-// const getEmployeeId = async (employee)
+// ****************
 
 // FUNCTION TO PRINT ALL EMPLOYEES
 
@@ -117,13 +90,10 @@ const printAllEmployees = async () => {
 };
 
 // FUNCTION TO ADD EMPLOYEE
-// TODO: Create way to add default of NULL to managerID field
 
 const addEmployeePrompt = async () => {
   const roleChoicesEmployeePrompt = [];
   getRoleTitlesForInquirer(roleChoicesEmployeePrompt);
-  // const managerChoicesPrompt = [];
-  // getManagerNamesForInquirer(managerChoicesPrompt);
 
   const managerChoicesPrompt = [];
   const managerIds = [];
@@ -187,7 +157,6 @@ const addEmployeePrompt = async () => {
 };
 
 // FUNCTION TO PRINT ALL ROLES
-// TODO: Join tables so department name is shown instead of department Id
 
 const printAllRoles = async () => {
   results = await getAllRoles();
