@@ -7,6 +7,7 @@ const {
   addDepartment,
   addRole,
   addEmployee,
+  addEmployeeWithManager,
   updateEmployeeRole,
   getRoleTitles,
   sendRoleId,
@@ -52,7 +53,7 @@ const getEmployeeNamesandIds = async (
   const allEmployees = allEmployeesMeta[0];
   if (managersOnly) {
     for (const employee of allEmployees) {
-      if (employee.manager_id === NULL) {
+      if (employee.manager === null) {
         employeeChoicesArray.push(
           `${employee.first_name} ${employee.last_name}`
         );
@@ -125,7 +126,8 @@ const addEmployeePrompt = async () => {
   // getManagerNamesForInquirer(managerChoicesPrompt);
 
   const managerChoicesPrompt = [];
-  const employeeIds = [];
+  const managerIds = [];
+  await getEmployeeNamesandIds(managerChoicesPrompt, managerIds, true);
 
   await inquirer
     .prompt([
@@ -167,12 +169,15 @@ const addEmployeePrompt = async () => {
           newEmployeeRoleId
         );
       } else {
-        // const newEmployeeManagerId = await getManagerID();
-        addEmployee(
+        const managerIndex = managerChoicesPrompt.indexOf(
+          `${data.assignManager}`
+        );
+        const newEmployeeManagerId = managerIds[managerIndex];
+        addEmployeeWithManager(
           data.employeeFirstName,
           data.employeeLastName,
-          newEmployeeRoleId
-          // newEmployeeManagerId
+          newEmployeeRoleId,
+          newEmployeeManagerId
         );
       }
       console.log(
@@ -303,3 +308,10 @@ const testManagers = async () => {
 // const masterTestArray = [];
 // getManagerNamesForInquirer(masterTestArray);
 // console.log(masterTestArray);
+
+// const employeeData = async () => {
+//   results = await getAllEmployees();
+//   console.log(results[0]);
+// };
+
+// employeeData();

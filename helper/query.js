@@ -90,26 +90,26 @@ const addRole = (title, salary, departmentId) => {
   );
 };
 
-// addEmployee as a callback function
-
-// const addEmployee = (firstName, lastName, roleId, managerId = null) => {
-//   db.query(
-//     `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${firstName}', '${lastName}', '${roleId}', '${managerId}');`,
-//     (err, results) => {
-//       if (err) {
-//         console.error(err);
-//         return;
-//       }
-//     }
-//   );
-// };
-
 // add employee test
 // TODO: add conditional to add manager id if it is present
 
 const addEmployee = (firstName, lastName, roleId) => {
   db.query(
     `INSERT INTO employee (first_name, last_name, role_id) VALUES ('${firstName}', '${lastName}', '${roleId}');`,
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
+};
+
+// FUNCTION TO ADD EMPLOYEE UNDER A MANAGER
+
+const addEmployeeWithManager = (firstName, lastName, roleId, managerId) => {
+  db.query(
+    `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${firstName}', '${lastName}', '${roleId}', '${managerId}');`,
     (err, results) => {
       if (err) {
         console.error(err);
@@ -138,6 +138,7 @@ module.exports = {
   addDepartment,
   addRole,
   addEmployee,
+  addEmployeeWithManager,
   updateEmployeeRole,
   getRoleTitles,
   sendRoleId,
